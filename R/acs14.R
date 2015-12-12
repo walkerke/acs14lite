@@ -11,6 +11,8 @@
 #' @export
 acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', state = NULL, county = NULL) {
 
+  v1 <- variable
+
   if (!(geography %in% c('us', 'region', 'division', 'state', 'county', 'tract', 'block group'))) {
 
     stop("Unsupported geography.  Currently available geographies in the acs14lite package are 'us', 'region', 'division', 'state', 'county', 'tract', and 'block group'.  ")
@@ -75,7 +77,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                    ':*&key=',
                    api_key)
 
-    return(load_data(call))
+    acsdata <- load_data(call)
+
+    if (length(v1) > 1) {
+
+      acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+      return(acsdata)
+
+    } else {
+
+      acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+      return(acsdata)
+
+    }
 
   }
 
@@ -90,7 +106,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      ':*&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
     } else {
 
@@ -103,7 +133,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      '&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
     }
 
@@ -121,7 +165,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      ':*&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
     }
 
@@ -142,7 +200,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      '&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
 
     }
@@ -160,7 +232,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      '&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
     }
 
@@ -192,7 +278,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      '&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
 
     }
@@ -211,7 +311,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      '&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
     }
 
@@ -232,7 +346,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      ':*&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
     }
 
@@ -263,7 +391,21 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
                      '&key=',
                      api_key)
 
-      return(load_data(call))
+      acsdata <- load_data(call)
+
+      if (length(v1) > 1) {
+
+        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
+
+        return(acsdata)
+
+      } else {
+
+        acsdata[,v1] <- as.numeric(acsdata[,v1])
+
+        return(acsdata)
+
+      }
 
     }
 
