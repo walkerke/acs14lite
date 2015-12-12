@@ -1,12 +1,29 @@
 #' Fetch data from the 2010-2014 American Community Survey
 #'
+#' Lightweight interface to the US Census Bureau's API for the 2010-2014 American Community Survey.
+#'
+#' @param api_key The Census API key of the user; can be set beforehand with the set_api_key function.
+#' @param geography The geography for which the user would like to request data.  Available geographies include 'us', 'region', 'division', 'state', 'county', 'tract', and 'block group'.  Defaults to 'us'.
+#' @param variable A character string or vector of character strings representing the variable name(s) for which the user would like to request data.  Defaults to 'B01001_001E', the estimate for Total Population.
+#' @param state The state for which data will be requested.  Defaults to NULL.
+#' @param county The county for which data will be requested.  Defaults to NULL.
 #'
 #' @export
-acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL, county = NULL, tract = NULL) {
+acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', state = NULL, county = NULL) {
+
+  if (!(geography %in% c('us', 'region', 'division', 'state', 'county', 'tract', 'block group'))) {
+
+    stop("Unsupported geography.  Currently available geographies in the acs14lite package are 'us', 'region', 'division', 'state', 'county', 'tract', and 'block group'.  ")
+
+  }
 
   if (Sys.getenv('ACS14_API') != '') {
 
     api_key <- Sys.getenv('ACS14_API')
+
+  } else if (is.null(api_key)) {
+
+    stop('A Census API key is required.  Obtain one at http://api.census.gov/data/key_signup.html, and then supply the key to the `set_api_key` function to use it throughout your acs14lite session.')
 
   }
 
@@ -20,7 +37,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
 
     if (length(state) > 1) {
 
-      stop("This package does not yet support multiple states.  To obtain all states, leave the `state` parameter blank.",
+      stop("This package does not yet support multiple states.  To obtain all states, leave the `state` argument blank.",
            call. = FALSE)
 
     }
@@ -37,22 +54,22 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
 
     if (length(county) > 1) {
 
-        county <- paste(county, sep = '', collapse = ',')
+        stop('This package does not yet support multiple counties.  To obtain all counties, leave the `county` argument blank.')
 
       }
 
   }
 
-  if (length(table) > 1) {
+  if (length(variable) > 1) {
 
-    table <- paste(table, sep = '', collapse = ',')
+    variable <- paste(variable, sep = '', collapse = ',')
 
   }
 
   if (geography %in% c('us', 'region', 'division')) {
 
     call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                   table,
+                   variable,
                    '&for=',
                    geography,
                    ':*&key=',
@@ -67,7 +84,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (is.null(state)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*&key=',
@@ -78,7 +95,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     } else {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':',
@@ -98,7 +115,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (is.null(county) & is.null(state)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*&key=',
@@ -117,7 +134,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (!is.null(state) & is.null(county)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*&in=state:',
@@ -133,7 +150,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (!is.null(state) & !is.null(county)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':',
@@ -155,7 +172,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (is.null(county) & is.null(state)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*&key=',
@@ -174,7 +191,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (!is.null(state) & is.null(county)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*&in=state:',
@@ -190,7 +207,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (!is.null(state) & !is.null(county)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*',
@@ -216,7 +233,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (is.null(county) & is.null(state)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*&key=',
@@ -242,7 +259,7 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
     if (!is.null(state) & !is.null(county)) {
 
       call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     table,
+                     variable,
                      '&for=',
                      geography,
                      ':*',
@@ -263,7 +280,9 @@ acs14 <- function(api_key, geography = 'us', table = 'B01001_001E', state = NULL
 
 }
 
-
+#' Set the Census API key
+#'
+#' @export
 set_api_key <- function(api_key) {
 
   Sys.setenv(ACS14_API = api_key)
