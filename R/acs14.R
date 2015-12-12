@@ -171,14 +171,7 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
     # Getting all tracts here for the US
     if (is.null(county) & is.null(state)) {
 
-      call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     variable,
-                     '&for=',
-                     geography,
-                     ':*&key=',
-                     api_key)
-
-      return(load_data(call))
+      stop("Please supply a valid state for which you'd like to request tracts.")
 
     }
 
