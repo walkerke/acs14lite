@@ -254,7 +254,6 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
 
   if (geography == 'tract') {
 
-    # Getting all tracts here for the US
     if (is.null(county) & is.null(state)) {
 
       stop("Please supply a valid state for which you'd like to request tracts.")
@@ -336,31 +335,9 @@ acs14 <- function(api_key = NULL, geography = 'us', variable = 'B01001_001E', st
 
     geography <- 'block+group'
 
-    # Getting all tracts here for the US
     if (is.null(county) & is.null(state)) {
 
-      call <- paste0('http://api.census.gov/data/2014/acs5?get=NAME,',
-                     variable,
-                     '&for=',
-                     geography,
-                     ':*&key=',
-                     api_key)
-
-      acsdata <- load_data(call)
-
-      if (length(v1) > 1) {
-
-        acsdata[,v1] <- apply(acsdata[,v1], 2, function(x) as.numeric(x))
-
-        return(acsdata)
-
-      } else {
-
-        acsdata[,v1] <- as.numeric(acsdata[,v1])
-
-        return(acsdata)
-
-      }
+      stop("Please specify a state and county for which you'd like to request block groups.")
 
     }
 
