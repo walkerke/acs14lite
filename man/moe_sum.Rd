@@ -4,7 +4,12 @@
 \alias{moe_sum}
 \title{Calculate the margin of error for a derived sum}
 \usage{
-moe_sum(...)
+moe_sum(vec, df = NULL)
+}
+\arguments{
+\item{vec}{A vector of numbers that represent margins of error, or column names from a data frame that represent margins of error for estimates in that data frame.}
+
+\item{df}{The data frame on which to perform the calculation, if applicable.}
 }
 \description{
 Calculate the margin of error for a derived sum
